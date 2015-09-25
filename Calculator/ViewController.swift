@@ -18,7 +18,10 @@ class ViewController: UIViewController {
         let digit = sender.currentTitle!
         if userIsInTheMiddleOfTypingANumber {
             let textInCurrentDisplay = display.text!
-            display.text = textInCurrentDisplay + digit
+            // When digit is a number or the first '.', concatenate to the display
+            if textInCurrentDisplay.rangeOfString(".") == nil || digit != "." {
+                display.text = textInCurrentDisplay + digit
+            }
         } else {
             display.text = digit
         }
