@@ -12,8 +12,17 @@ class CalculatorBrain {
     
     var accumulator = 0.0
     
+    var description = ""
+    
+    var isPartialResult: Bool {
+        get {
+            return pending != nil
+        }
+    }
+    
     func setOperand(operand: Double) {
         accumulator = operand
+        description += String(operand) //
     }
     
     var operations: Dictionary<String, Operation> = [
@@ -22,6 +31,9 @@ class CalculatorBrain {
         "√": Operation.UnaryOperation(sqrt),
         "sin": Operation.UnaryOperation(sin),
         "cos": Operation.UnaryOperation(cos),
+        "tan": Operation.UnaryOperation(tan),
+        "log": Operation.UnaryOperation(log),
+        "%": Operation.UnaryOperation({ $0 / 100 }),
         "±": Operation.UnaryOperation({ -$0 }),
         "×": Operation.BinaryOperation({ $0 * $1 }),
         "÷": Operation.BinaryOperation({ $0 / $1 }),
@@ -38,6 +50,9 @@ class CalculatorBrain {
     }
     
     func performOperation(symbol: String) {
+        if symbol != "=" {
+            description += symbol
+        }
         if let operation = operations[symbol] {
             switch operation {
             case .Constant(let value):

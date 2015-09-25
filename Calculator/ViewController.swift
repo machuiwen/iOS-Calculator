@@ -23,7 +23,12 @@ class ViewController: UIViewController {
                 display.text = textInCurrentDisplay + digit
             }
         } else {
-            display.text = digit
+            // If '.' is the first digit, display '0.'
+            if digit == "." {
+                display.text = "0."
+            } else {
+                display.text = digit
+            }
         }
         userIsInTheMiddleOfTypingANumber = true
     }
@@ -48,6 +53,7 @@ class ViewController: UIViewController {
             brain.performOperation(mathematicalSymbol)
         }
         displayValue = brain.result
+        print(brain.description)
     }
     
 }
