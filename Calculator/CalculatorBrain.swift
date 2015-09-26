@@ -12,7 +12,14 @@ class CalculatorBrain {
     
     var accumulator = 0.0
     
-    var description = ""
+    var sequence = ""
+    var currentOperand = "0"
+    
+    var description: String {
+        get {
+            return sequence + currentOperand
+        }
+    }
     
     var isPartialResult: Bool {
         get {
@@ -22,7 +29,7 @@ class CalculatorBrain {
     
     func setOperand(operand: Double) {
         accumulator = operand
-        description += String(operand) //
+        currentOperand = String(operand)
     }
     
     var operations: Dictionary<String, Operation> = [
@@ -39,7 +46,8 @@ class CalculatorBrain {
         "÷": Operation.BinaryOperation({ $0 / $1 }),
         "+": Operation.BinaryOperation({ $0 + $1 }),
         "−": Operation.BinaryOperation({ $0 - $1 }),
-        "=": Operation.Equals
+        "=": Operation.Equals,
+        "C": Operation.Clear
     ]
     
     enum Operation {
@@ -47,23 +55,30 @@ class CalculatorBrain {
         case UnaryOperation((Double) -> Double)
         case BinaryOperation((Double, Double) -> Double)
         case Equals
+        case Clear
     }
     
     func performOperation(symbol: String) {
-        if symbol != "=" {
-            description += symbol
-        }
         if let operation = operations[symbol] {
             switch operation {
             case .Constant(let value):
                 accumulator = value
+                currentOperand = symbol
             case .UnaryOperation(let function):
                 accumulator = function(accumulator)
+                currentOperand = symbol + "(" + currentOperand + ")"
             case .BinaryOperation(let function):
                 executePendingBinaryOperation()
                 pending = PendingBinaryOperationInfo(binaryFunction: function, firstOperand: accumulator)
+                sequence = sequence + currentOperand + symbol
+                currentOperand = ""
             case .Equals:
                 executePendingBinaryOperation()
+            case .Clear:
+                accumulator = 0.0
+                sequence = ""
+                currentOperand = "0"
+                pending = nil
             }
             
         }
@@ -71,6 +86,11 @@ class CalculatorBrain {
     
     func executePendingBinaryOperation() {
         if pending != nil {
+            if currentOperand == "" {
+                currentOperand = String(accumulator)
+            }
+            currentOperand = "(" + sequence + currentOperand + ")"
+            sequence = ""
             accumulator = pending!.binaryFunction(pending!.firstOperand, accumulator)
             pending = nil
         }

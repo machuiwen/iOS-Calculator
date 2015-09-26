@@ -12,6 +12,8 @@ class ViewController: UIViewController {
     
     @IBOutlet weak var display: UILabel!
     
+    @IBOutlet weak var inputSequence: UILabel!
+    
     var userIsInTheMiddleOfTypingANumber = false
     
     @IBAction func touchDigit(sender: UIButton) {
@@ -53,7 +55,15 @@ class ViewController: UIViewController {
             brain.performOperation(mathematicalSymbol)
         }
         displayValue = brain.result
-        print(brain.description)
+        if brain.description != "" {
+            if brain.isPartialResult {
+                inputSequence.text = brain.description + "..."
+            } else {
+                inputSequence.text = brain.description + "="
+            }
+        } else {
+            inputSequence.text = brain.description
+        }
     }
     
 }
