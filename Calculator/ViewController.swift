@@ -40,7 +40,8 @@ class ViewController: UIViewController {
             return Double(display.text!)!
         }
         set {
-            display.text = String(newValue)
+            // display integer when possible
+            display.text = (round(newValue) == newValue) ? String(Int(newValue)) : String(newValue)
         }
     }
     
@@ -51,20 +52,20 @@ class ViewController: UIViewController {
             brain.setOperand(displayValue)
             userIsInTheMiddleOfTypingANumber = false
         }
-        if let mathematicalSymbol = sender.currentTitle {
-            brain.performOperation(mathematicalSymbol)
+        if let operationSymbol = sender.currentTitle {
+            brain.performOperation(operationSymbol)
         }
         displayValue = brain.result
-        if brain.description != "" {
+        if brain.description != " " {
             if brain.isPartialResult {
                 inputSequence.text = brain.description + "..."
             } else {
                 inputSequence.text = brain.description + "="
             }
         } else {
+            // default text
             inputSequence.text = brain.description
         }
     }
     
 }
-

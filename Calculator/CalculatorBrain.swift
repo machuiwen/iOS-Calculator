@@ -12,8 +12,8 @@ class CalculatorBrain {
     
     var accumulator = 0.0
     
-    var sequence = ""
-    var currentOperand = "0"
+    var sequence = " "
+    var currentOperand = ""
     
     var description: String {
         get {
@@ -27,9 +27,13 @@ class CalculatorBrain {
         }
     }
     
+    func doubleToString(operand: Double) -> String {
+        return (round(operand) == operand) ? String(Int(operand)) : String(operand)
+    }
+    
     func setOperand(operand: Double) {
         accumulator = operand
-        currentOperand = String(operand)
+        currentOperand = doubleToString(operand)
     }
     
     var operations: Dictionary<String, Operation> = [
@@ -66,6 +70,10 @@ class CalculatorBrain {
                 currentOperand = symbol
             case .UnaryOperation(let function):
                 accumulator = function(accumulator)
+                // If there is no current operand, use the accumulator value
+                if currentOperand == "" {
+                    currentOperand = doubleToString(accumulator)
+                }
                 currentOperand = symbol + "(" + currentOperand + ")"
             case .BinaryOperation(let function):
                 executePendingBinaryOperation()
@@ -76,8 +84,8 @@ class CalculatorBrain {
                 executePendingBinaryOperation()
             case .Clear:
                 accumulator = 0.0
-                sequence = ""
-                currentOperand = "0"
+                sequence = " "
+                currentOperand = ""
                 pending = nil
             }
             
@@ -87,9 +95,9 @@ class CalculatorBrain {
     func executePendingBinaryOperation() {
         if pending != nil {
             if currentOperand == "" {
-                currentOperand = String(accumulator)
+                currentOperand = doubleToString(accumulator)
             }
-            currentOperand = "(" + sequence + currentOperand + ")"
+            currentOperand = sequence + currentOperand
             sequence = ""
             accumulator = pending!.binaryFunction(pending!.firstOperand, accumulator)
             pending = nil
