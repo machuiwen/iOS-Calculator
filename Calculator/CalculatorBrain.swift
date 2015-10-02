@@ -39,12 +39,14 @@ class CalculatorBrain {
     var operations: Dictionary<String, Operation> = [
         "π": Operation.Constant(M_PI),
         "e": Operation.Constant(M_E),
+        "Rand": Operation.Variable({ Double(arc4random()) / Double(UINT32_MAX) }),
         "√": Operation.UnaryOperation(sqrt),
         "sin": Operation.UnaryOperation(sin),
         "cos": Operation.UnaryOperation(cos),
-        "tan": Operation.UnaryOperation(tan),
-        "log": Operation.UnaryOperation(log),
-        "%": Operation.UnaryOperation({ $0 / 100 }),
+        "ln": Operation.UnaryOperation({ ($0 > 0) ? log($0) : Double.NaN }),
+        "x²": Operation.UnaryOperation({ pow($0, 2) }),
+        "x⁻¹": Operation.UnaryOperation({ ($0 == 0) ? Double.NaN : 1 / $0 }),
+        "eˣ": Operation.UnaryOperation({ pow(M_E, $0) }),
         "±": Operation.UnaryOperation({ -$0 }),
         "×": Operation.BinaryOperation({ $0 * $1 }),
         "÷": Operation.BinaryOperation({ $0 / $1 }),
@@ -56,6 +58,7 @@ class CalculatorBrain {
     
     enum Operation {
         case Constant(Double)
+        case Variable(() -> Double)
         case UnaryOperation((Double) -> Double)
         case BinaryOperation((Double, Double) -> Double)
         case Equals
@@ -68,13 +71,25 @@ class CalculatorBrain {
             case .Constant(let value):
                 accumulator = value
                 currentOperand = symbol
+            case .Variable(let function):
+                accumulator = function()
+                currentOperand = doubleToString(accumulator)
             case .UnaryOperation(let function):
-                accumulator = function(accumulator)
                 // If there is no current operand, use the accumulator value
                 if currentOperand == "" {
                     currentOperand = doubleToString(accumulator)
                 }
-                currentOperand = symbol + "(" + currentOperand + ")"
+                accumulator = function(accumulator)
+                switch symbol {
+                case "x²":
+                    currentOperand = "(" + currentOperand + ")²"
+                case "x⁻¹":
+                    currentOperand = "(" + currentOperand + ")⁻¹"
+                case "eˣ":
+                    currentOperand = "e^" + "(" + currentOperand + ")"
+                default:
+                    currentOperand = symbol + "(" + currentOperand + ")"
+                }
             case .BinaryOperation(let function):
                 executePendingBinaryOperation()
                 pending = PendingBinaryOperationInfo(binaryFunction: function, firstOperand: accumulator)

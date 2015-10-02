@@ -35,13 +35,17 @@ class ViewController: UIViewController {
         userIsInTheMiddleOfTypingANumber = true
     }
     
-    var displayValue: Double {
+    var displayValue: Double? {
         get {
-            return Double(display.text!)!
+            return Double(display.text!)
         }
         set {
             // display integer when possible
-            display.text = (round(newValue) == newValue) ? String(Int(newValue)) : String(newValue)
+            if let value = newValue {
+                display.text = (round(value) == value) ? String(Int(value)) : String(value)
+            } else {
+                display.text = " "
+            }
         }
     }
     
@@ -49,7 +53,7 @@ class ViewController: UIViewController {
     
     @IBAction func performOperation(sender: UIButton) {
         if userIsInTheMiddleOfTypingANumber {
-            brain.setOperand(displayValue)
+            brain.setOperand(displayValue!)
             userIsInTheMiddleOfTypingANumber = false
         }
         if let operationSymbol = sender.currentTitle {
