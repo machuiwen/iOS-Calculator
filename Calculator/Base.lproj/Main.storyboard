@@ -49,7 +49,7 @@
                                                         <rect key="frame" x="0.0" y="0.0" width="133" height="58"/>
                                                         <color key="backgroundColor" red="0.99607843139999996" green="0.78823529410000004" blue="0.086274509799999996" alpha="1" colorSpace="calibratedRGB"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="30"/>
-                                                        <state key="normal" title="Rand">
+                                                        <state key="normal" title="sin">
                                                             <color key="titleColor" white="0.39519942429999999" alpha="1" colorSpace="calibratedWhite"/>
                                                         </state>
                                                         <connections>
@@ -60,7 +60,7 @@
                                                         <rect key="frame" x="143" y="0.0" width="132" height="58"/>
                                                         <color key="backgroundColor" red="0.99607843139999996" green="0.78823529410000004" blue="0.086274509799999996" alpha="1" colorSpace="calibratedRGB"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="30"/>
-                                                        <state key="normal" title="x⁻¹">
+                                                        <state key="normal" title="cos">
                                                             <color key="titleColor" white="0.39519942429999999" alpha="1" colorSpace="calibratedWhite"/>
                                                         </state>
                                                         <connections>
@@ -98,7 +98,7 @@
                                                         <rect key="frame" x="0.0" y="0.0" width="133" height="59"/>
                                                         <color key="backgroundColor" red="0.99607843139999996" green="0.78823529410000004" blue="0.086274509799999996" alpha="1" colorSpace="calibratedRGB"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="30"/>
-                                                        <state key="normal" title="sin">
+                                                        <state key="normal" title="√">
                                                             <color key="titleColor" white="0.39519942429999999" alpha="1" colorSpace="calibratedWhite"/>
                                                         </state>
                                                         <connections>
@@ -109,7 +109,7 @@
                                                         <rect key="frame" x="143" y="0.0" width="132" height="59"/>
                                                         <color key="backgroundColor" red="0.99607843137254903" green="0.78823529411764703" blue="0.086274509803921567" alpha="1" colorSpace="calibratedRGB"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="30"/>
-                                                        <state key="normal" title="cos">
+                                                        <state key="normal" title="x²">
                                                             <color key="titleColor" white="0.39519942429999999" alpha="1" colorSpace="calibratedWhite"/>
                                                         </state>
                                                         <connections>
@@ -147,7 +147,7 @@
                                                         <rect key="frame" x="0.0" y="0.0" width="133" height="58"/>
                                                         <color key="backgroundColor" red="0.99607843139999996" green="0.78823529410000004" blue="0.086274509799999996" alpha="1" colorSpace="calibratedRGB"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="30"/>
-                                                        <state key="normal" title="x²">
+                                                        <state key="normal" title="Rand">
                                                             <color key="titleColor" white="0.39519942429999999" alpha="1" colorSpace="calibratedWhite"/>
                                                         </state>
                                                         <connections>
@@ -158,7 +158,7 @@
                                                         <rect key="frame" x="143" y="0.0" width="132" height="58"/>
                                                         <color key="backgroundColor" red="0.99607843139999996" green="0.78823529410000004" blue="0.086274509799999996" alpha="1" colorSpace="calibratedRGB"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="30"/>
-                                                        <state key="normal" title="√">
+                                                        <state key="normal" title="x⁻¹">
                                                             <color key="titleColor" white="0.39519942429999999" alpha="1" colorSpace="calibratedWhite"/>
                                                         </state>
                                                         <connections>

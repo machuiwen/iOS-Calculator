@@ -298,6 +298,7 @@
 				5D6244A91BB4DC1900A945E0 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
