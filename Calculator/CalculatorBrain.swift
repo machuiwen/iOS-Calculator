@@ -10,10 +10,10 @@ import Foundation
 
 class CalculatorBrain {
     
-    var accumulator = 0.0
+    private var accumulator = 0.0
     
-    var sequence = " "
-    var currentOperand = ""
+    private var sequence = " "
+    private var currentOperand = ""
     
     var description: String {
         get {
@@ -27,7 +27,7 @@ class CalculatorBrain {
         }
     }
     
-    func doubleToString(operand: Double) -> String {
+    private func doubleToString(operand: Double) -> String {
         return (round(operand) == operand) ? String(Int(operand)) : String(operand)
     }
     
@@ -36,7 +36,7 @@ class CalculatorBrain {
         currentOperand = doubleToString(operand)
     }
     
-    var operations: Dictionary<String, Operation> = [
+    private var operations: Dictionary<String, Operation> = [
         "π": Operation.Constant(M_PI),
         "e": Operation.Constant(M_E),
         "Rand": Operation.Variable({ Double(arc4random()) / Double(UINT32_MAX) }),
@@ -48,15 +48,15 @@ class CalculatorBrain {
         "x⁻¹": Operation.UnaryOperation({ ($0 == 0) ? Double.NaN : 1 / $0 }),
         "eˣ": Operation.UnaryOperation({ pow(M_E, $0) }),
         "±": Operation.UnaryOperation({ -$0 }),
-        "×": Operation.BinaryOperation({ $0 * $1 }),
-        "÷": Operation.BinaryOperation({ $0 / $1 }),
-        "+": Operation.BinaryOperation({ $0 + $1 }),
-        "−": Operation.BinaryOperation({ $0 - $1 }),
+        "×": Operation.BinaryOperation(*),
+        "÷": Operation.BinaryOperation(/),
+        "+": Operation.BinaryOperation(+),
+        "−": Operation.BinaryOperation(-),
         "=": Operation.Equals,
         "C": Operation.Clear
     ]
     
-    enum Operation {
+    private enum Operation {
         case Constant(Double)
         case Variable(() -> Double)
         case UnaryOperation((Double) -> Double)
@@ -107,11 +107,11 @@ class CalculatorBrain {
         }
     }
     
-    func executePendingBinaryOperation() {
+    private func executePendingBinaryOperation() {
+        if currentOperand == "" {
+            currentOperand = doubleToString(accumulator)
+        }
         if pending != nil {
-            if currentOperand == "" {
-                currentOperand = doubleToString(accumulator)
-            }
             currentOperand = sequence + currentOperand
             sequence = ""
             accumulator = pending!.binaryFunction(pending!.firstOperand, accumulator)
@@ -119,12 +119,12 @@ class CalculatorBrain {
         }
     }
     
-    struct PendingBinaryOperationInfo {
+    private struct PendingBinaryOperationInfo {
         var binaryFunction: (Double, Double) -> Double
         var firstOperand: Double
     }
     
-    var pending: PendingBinaryOperationInfo?
+    private var pending: PendingBinaryOperationInfo?
     
     var result: Double {
         get {
