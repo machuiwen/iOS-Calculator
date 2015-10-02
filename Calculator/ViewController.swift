@@ -40,10 +40,11 @@ class ViewController: UIViewController {
             return Double(display.text!)
         }
         set {
-            // display integer when possible
             if let value = newValue {
+                // display integer when possible
                 display.text = (round(value) == value) ? String(Int(value)) : String(value)
             } else {
+                // clear the display out
                 display.text = " "
             }
         }
@@ -53,8 +54,12 @@ class ViewController: UIViewController {
     
     @IBAction func performOperation(sender: UIButton) {
         if userIsInTheMiddleOfTypingANumber {
-            brain.setOperand(displayValue!)
-            userIsInTheMiddleOfTypingANumber = false
+            if let operand = displayValue {
+                brain.setOperand(operand)
+                userIsInTheMiddleOfTypingANumber = false
+            } else {
+                return
+            }
         }
         if let operationSymbol = sender.currentTitle {
             brain.performOperation(operationSymbol)
