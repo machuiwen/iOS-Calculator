@@ -35,6 +35,16 @@ class ViewController: UIViewController {
         userIsInTheMiddleOfTypingANumber = true
     }
     
+    @IBAction func touchBackspace(sender: UIButton) {
+        if userIsInTheMiddleOfTypingANumber {
+            display.text!.removeAtIndex(display.text!.endIndex.predecessor())
+            if display.text!.isEmpty {
+                userIsInTheMiddleOfTypingANumber = false
+                display.text = "0"
+            }
+        }
+    }
+    
     var displayValue: Double? {
         get {
             return Double(display.text!)
