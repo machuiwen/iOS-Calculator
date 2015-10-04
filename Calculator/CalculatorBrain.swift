@@ -10,6 +10,13 @@ import Foundation
 
 class CalculatorBrain {
     
+    let floatFormatter = NSNumberFormatter()
+    
+    init() {
+        floatFormatter.maximumFractionDigits = 6
+        floatFormatter.minimumIntegerDigits = 1
+    }
+    
     private var accumulator = 0.0
     
     private var sequence = " "
@@ -27,13 +34,9 @@ class CalculatorBrain {
         }
     }
     
-    private func doubleToString(operand: Double) -> String {
-        return (round(operand) == operand) ? String(Int(operand)) : String(operand)
-    }
-    
     func setOperand(operand: Double) {
         accumulator = operand
-        currentOperand = doubleToString(operand)
+        currentOperand = floatFormatter.stringFromNumber(accumulator)!
     }
     
     private var operations: Dictionary<String, Operation> = [
@@ -73,11 +76,11 @@ class CalculatorBrain {
                 currentOperand = symbol
             case .Variable(let function):
                 accumulator = function()
-                currentOperand = doubleToString(accumulator)
+                currentOperand = floatFormatter.stringFromNumber(accumulator)!
             case .UnaryOperation(let function):
                 // If there is no current operand, use the accumulator value
                 if currentOperand == "" {
-                    currentOperand = doubleToString(accumulator)
+                    currentOperand = floatFormatter.stringFromNumber(accumulator)!
                 }
                 accumulator = function(accumulator)
                 switch symbol {
@@ -109,7 +112,7 @@ class CalculatorBrain {
     
     private func executePendingBinaryOperation() {
         if currentOperand == "" {
-            currentOperand = doubleToString(accumulator)
+            currentOperand = floatFormatter.stringFromNumber(accumulator)!
         }
         if pending != nil {
             currentOperand = sequence + currentOperand

@@ -10,11 +10,21 @@ import UIKit
 
 class ViewController: UIViewController {
     
+    let floatFormatter = NSNumberFormatter()
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        // additional setup after loading the view
+        floatFormatter.maximumFractionDigits = 6
+        floatFormatter.minimumIntegerDigits = 1
+    }
+    
     @IBOutlet weak var display: UILabel!
     
     @IBOutlet weak var inputSequence: UILabel!
     
     var userIsInTheMiddleOfTypingANumber = false
+    
     
     @IBAction func touchDigit(sender: UIButton) {
         let digit = sender.currentTitle!
@@ -40,7 +50,7 @@ class ViewController: UIViewController {
             display.text!.removeAtIndex(display.text!.endIndex.predecessor())
             if display.text!.isEmpty {
                 userIsInTheMiddleOfTypingANumber = false
-                display.text = "0"
+                displayValue = 0
             }
         }
     }
@@ -51,8 +61,7 @@ class ViewController: UIViewController {
         }
         set {
             if let value = newValue {
-                // display integer when possible
-                display.text = (round(value) == value) ? String(Int(value)) : String(value)
+                display.text = floatFormatter.stringFromNumber(value)
             } else {
                 // clear the display out
                 display.text = " "
