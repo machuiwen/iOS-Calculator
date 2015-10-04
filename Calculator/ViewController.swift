@@ -10,7 +10,7 @@ import UIKit
 
 class ViewController: UIViewController {
     
-    let floatFormatter = NSNumberFormatter()
+    private let floatFormatter = NSNumberFormatter()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -19,14 +19,22 @@ class ViewController: UIViewController {
         floatFormatter.minimumIntegerDigits = 1
     }
     
-    @IBOutlet weak var display: UILabel!
+    @IBOutlet private weak var display: UILabel!
     
-    @IBOutlet weak var inputSequence: UILabel!
+    @IBOutlet private weak var inputSequence: UILabel!
     
-    var userIsInTheMiddleOfTypingANumber = false
+    private var userIsInTheMiddleOfTypingANumber = false
     
-    
-    @IBAction func touchDigit(sender: UIButton) {
+    @IBAction private func touchBackspace() {
+        if userIsInTheMiddleOfTypingANumber {
+            display.text!.removeAtIndex(display.text!.endIndex.predecessor())
+            if display.text!.isEmpty {
+                userIsInTheMiddleOfTypingANumber = false
+                displayValue = 0
+            }
+        }
+    }
+    @IBAction private func touchDigit(sender: UIButton) {
         let digit = sender.currentTitle!
         if userIsInTheMiddleOfTypingANumber {
             let textInCurrentDisplay = display.text!
@@ -45,17 +53,7 @@ class ViewController: UIViewController {
         userIsInTheMiddleOfTypingANumber = true
     }
     
-    @IBAction func touchBackspace(sender: UIButton) {
-        if userIsInTheMiddleOfTypingANumber {
-            display.text!.removeAtIndex(display.text!.endIndex.predecessor())
-            if display.text!.isEmpty {
-                userIsInTheMiddleOfTypingANumber = false
-                displayValue = 0
-            }
-        }
-    }
-    
-    var displayValue: Double? {
+    private var displayValue: Double? {
         get {
             return Double(display.text!)
         }
@@ -69,9 +67,9 @@ class ViewController: UIViewController {
         }
     }
     
-    var brain = CalculatorBrain()
+    private var brain = CalculatorBrain()
     
-    @IBAction func performOperation(sender: UIButton) {
+    @IBAction private func performOperation(sender: UIButton) {
         if userIsInTheMiddleOfTypingANumber {
             if let operand = displayValue {
                 brain.setOperand(operand)
