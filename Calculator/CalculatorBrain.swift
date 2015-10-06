@@ -21,6 +21,8 @@ class CalculatorBrain {
     
     private var sequence = ""
     private var currentOperand = ""
+    // whenever current operand is set to "", we need an implicit operand
+    private var implicitCurrentOperand = "0"
     
     var description: String {
         get {
@@ -94,6 +96,7 @@ class CalculatorBrain {
             accumulator = 0.0
             sequence = ""
             currentOperand = ""
+            implicitCurrentOperand = "0"
             pending = nil
             internalProgram.removeAll()
             if let arrayOfOps = newValue as? [AnyObject] {
@@ -125,9 +128,9 @@ class CalculatorBrain {
                 accumulator = function()
                 currentOperand = floatFormatter.stringFromNumber(accumulator)!
             case .UnaryOperation(let function):
-                // If there is no current operand, use the accumulator value
+                // If there is no current operand, use the implicit operand
                 if currentOperand == "" {
-                    currentOperand = floatFormatter.stringFromNumber(accumulator)!
+                    currentOperand = implicitCurrentOperand
                 }
                 accumulator = function(accumulator)
                 switch symbol {
@@ -143,6 +146,7 @@ class CalculatorBrain {
             case .BinaryOperation(let function):
                 executePendingBinaryOperation()
                 pending = PendingBinaryOperationInfo(binaryFunction: function, firstOperand: accumulator)
+                implicitCurrentOperand = sequence + currentOperand
                 sequence = sequence + currentOperand + symbol
                 currentOperand = ""
             case .Equals:
@@ -151,6 +155,7 @@ class CalculatorBrain {
                 accumulator = 0.0
                 sequence = ""
                 currentOperand = ""
+                implicitCurrentOperand = "0"
                 pending = nil
                 internalProgram.removeAll()
                 variableValues.removeAll()
@@ -161,7 +166,7 @@ class CalculatorBrain {
     
     private func executePendingBinaryOperation() {
         if currentOperand == "" {
-            currentOperand = floatFormatter.stringFromNumber(accumulator)!
+            currentOperand = implicitCurrentOperand
         }
         if pending != nil {
             currentOperand = sequence + currentOperand

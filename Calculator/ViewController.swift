@@ -90,13 +90,13 @@ class ViewController: UIViewController {
         }
     }
     
-    @IBAction func setVariable() {
+    @IBAction private func setVariable() {
         brain.variableValues["M"] = displayValue
         userIsInTheMiddleOfTypingANumber = false
         displayValue = brain.result
     }
     
-    @IBAction func getVariable() {
+    @IBAction private func getVariable() {
         brain.setOperand("M")
         userIsInTheMiddleOfTypingANumber = false
         displayValue = brain.result
