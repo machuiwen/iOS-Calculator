@@ -86,7 +86,7 @@
                                                             <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                         </state>
                                                         <connections>
-                                                            <action selector="touchBackspace" destination="BYZ-38-t0r" eventType="touchUpInside" id="uKN-BI-qza"/>
+                                                            <action selector="touchUndo:" destination="BYZ-38-t0r" eventType="touchUpInside" id="0Hz-oT-1rl"/>
                                                         </connections>
                                                     </button>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rwj-KY-J4a">

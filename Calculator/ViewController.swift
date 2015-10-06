@@ -25,13 +25,25 @@ class ViewController: UIViewController {
     
     private var userIsInTheMiddleOfTypingANumber = false
     
-    @IBAction private func touchBackspace() {
+    private func updateDisplayAndDescription() {
+        displayValue = brain.result
+        if brain.description.isEmpty {
+            inputSequence.text = " "
+        } else {
+            inputSequence.text = brain.description + (brain.isPartialResult ? "..." : "=")
+        }
+    }
+    
+    @IBAction private func touchUndo(sender: UIButton) {
         if userIsInTheMiddleOfTypingANumber {
             display.text!.removeAtIndex(display.text!.endIndex.predecessor())
             if display.text!.isEmpty {
                 userIsInTheMiddleOfTypingANumber = false
                 displayValue = 0
             }
+        } else {
+            brain.performOperation(sender.currentTitle!)
+            updateDisplayAndDescription()
         }
     }
     
@@ -59,12 +71,7 @@ class ViewController: UIViewController {
             return Double(display.text!)
         }
         set {
-            if let value = newValue {
-                display.text = floatFormatter.stringFromNumber(value)
-            } else {
-                // clear the display out
-                display.text = " "
-            }
+            display.text = floatFormatter.stringFromNumber(newValue ?? 0)
         }
     }
     
@@ -82,12 +89,7 @@ class ViewController: UIViewController {
         if let operationSymbol = sender.currentTitle {
             brain.performOperation(operationSymbol)
         }
-        displayValue = brain.result
-        if brain.description.isEmpty {
-            inputSequence.text = " "
-        } else {
-            inputSequence.text = brain.description + (brain.isPartialResult ? "..." : "=")
-        }
+        updateDisplayAndDescription()
     }
     
     @IBAction private func setVariable() {
@@ -99,12 +101,7 @@ class ViewController: UIViewController {
     @IBAction private func getVariable() {
         brain.setOperand("M")
         userIsInTheMiddleOfTypingANumber = false
-        displayValue = brain.result
-        if brain.description.isEmpty {
-            inputSequence.text = " "
-        } else {
-            inputSequence.text = brain.description + (brain.isPartialResult ? "..." : "=")
-        }
+        updateDisplayAndDescription()
     }
     
 }

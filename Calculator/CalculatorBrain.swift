@@ -72,6 +72,7 @@ class CalculatorBrain {
         "+": Operation.BinaryOperation(+),
         "−": Operation.BinaryOperation(-),
         "=": Operation.Equals,
+        "←": Operation.Undo,
         "C": Operation.Clear
     ]
     
@@ -81,7 +82,21 @@ class CalculatorBrain {
         case UnaryOperation((Double) -> Double)
         case BinaryOperation((Double, Double) -> Double)
         case Equals
+        case Undo
         case Clear
+    }
+    
+    private func clearBrain() {
+        accumulator = 0.0
+        sequence = ""
+        currentOperand = ""
+        implicitCurrentOperand = "0"
+        pending = nil
+        internalProgram.removeAll()
+    }
+    
+    private func clearVariableValues() {
+        variableValues.removeAll()
     }
     
     private var internalProgram = [AnyObject]()
@@ -93,12 +108,7 @@ class CalculatorBrain {
             return internalProgram
         }
         set {
-            accumulator = 0.0
-            sequence = ""
-            currentOperand = ""
-            implicitCurrentOperand = "0"
-            pending = nil
-            internalProgram.removeAll()
+            clearBrain()
             if let arrayOfOps = newValue as? [AnyObject] {
                 for op in arrayOfOps {
                     if let operand = op as? Double {
@@ -151,14 +161,17 @@ class CalculatorBrain {
                 currentOperand = ""
             case .Equals:
                 executePendingBinaryOperation()
+            case .Undo:
+                // first remove the '←' operand
+                internalProgram.removeLast()
+                // undo the last thing
+                if internalProgram.count != 0 {
+                    internalProgram.removeLast()
+                    self.program = internalProgram
+                }
             case .Clear:
-                accumulator = 0.0
-                sequence = ""
-                currentOperand = ""
-                implicitCurrentOperand = "0"
-                pending = nil
-                internalProgram.removeAll()
-                variableValues.removeAll()
+                clearBrain()
+                clearVariableValues()
             }
             
         }
