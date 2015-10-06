@@ -10,16 +10,16 @@ import Foundation
 
 class CalculatorBrain {
     
-    let floatFormatter = NSNumberFormatter()
-    
     init() {
         floatFormatter.maximumFractionDigits = 6
         floatFormatter.minimumIntegerDigits = 1
     }
     
+    private let floatFormatter = NSNumberFormatter()
+    
     private var accumulator = 0.0
     
-    private var sequence = " "
+    private var sequence = ""
     private var currentOperand = ""
     
     var description: String {
@@ -40,10 +40,23 @@ class CalculatorBrain {
         currentOperand = floatFormatter.stringFromNumber(accumulator)!
     }
     
+    var variableValues: Dictionary<String, Double> = [String:Double]() {
+        didSet {
+            // when the dict changes, re-evaluate the result
+            self.program = internalProgram
+        }
+    }
+    
+    func setOperand(variableName: String) {
+        internalProgram.append(variableName)
+        accumulator = variableValues[variableName] ?? 0.0
+        currentOperand = variableName // this may be not enough, because when cur = "", we convert from accumulator rather than still using variableName
+    }
+    
     private var operations: Dictionary<String, Operation> = [
         "π": Operation.Constant(M_PI),
         "e": Operation.Constant(M_E),
-        "Rand": Operation.Variable({ Double(arc4random()) / Double(UINT32_MAX) }),
+        "🎲": Operation.Variable({ Double(arc4random()) / Double(UINT32_MAX) }),
         "√": Operation.UnaryOperation(sqrt),
         "sin": Operation.UnaryOperation(sin),
         "cos": Operation.UnaryOperation(cos),
@@ -79,7 +92,7 @@ class CalculatorBrain {
         }
         set {
             accumulator = 0.0
-            sequence = " "
+            sequence = ""
             currentOperand = ""
             pending = nil
             internalProgram.removeAll()
@@ -87,8 +100,14 @@ class CalculatorBrain {
                 for op in arrayOfOps {
                     if let operand = op as? Double {
                         setOperand(operand)
-                    } else if let operation = op as? String {
-                        performOperation(operation)
+                    } else if let variableOrOperation = op as? String {
+                        if operations[variableOrOperation] != nil {
+                            // operation
+                            performOperation(variableOrOperation)
+                        } else {
+                            // variable
+                            setOperand(variableOrOperation)
+                        }
                     }
                 }
             }
@@ -130,9 +149,11 @@ class CalculatorBrain {
                 executePendingBinaryOperation()
             case .Clear:
                 accumulator = 0.0
-                sequence = " "
+                sequence = ""
                 currentOperand = ""
                 pending = nil
+                internalProgram.removeAll()
+                variableValues.removeAll()
             }
             
         }

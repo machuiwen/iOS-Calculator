@@ -34,6 +34,7 @@ class ViewController: UIViewController {
             }
         }
     }
+    
     @IBAction private func touchDigit(sender: UIButton) {
         let digit = sender.currentTitle!
         if userIsInTheMiddleOfTypingANumber {
@@ -82,16 +83,22 @@ class ViewController: UIViewController {
             brain.performOperation(operationSymbol)
         }
         displayValue = brain.result
-        if brain.description != " " {
-            if brain.isPartialResult {
-                inputSequence.text = brain.description + "..."
-            } else {
-                inputSequence.text = brain.description + "="
-            }
+        if brain.description.isEmpty {
+            inputSequence.text = " "
         } else {
-            // default text
-            inputSequence.text = brain.description
+            inputSequence.text = brain.description + (brain.isPartialResult ? "..." : "=")
         }
+    }
+    
+    @IBAction func setVariable() {
+        brain.variableValues["M"] = displayValue
+        userIsInTheMiddleOfTypingANumber = false
+        displayValue = brain.result
+    }
+    
+    @IBAction func getVariable() {
+        brain.setOperand("M")
+        displayValue = brain.result
     }
     
 }
