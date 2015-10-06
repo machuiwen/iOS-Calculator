@@ -98,7 +98,13 @@ class ViewController: UIViewController {
     
     @IBAction func getVariable() {
         brain.setOperand("M")
+        userIsInTheMiddleOfTypingANumber = false
         displayValue = brain.result
+        if brain.description.isEmpty {
+            inputSequence.text = " "
+        } else {
+            inputSequence.text = brain.description + (brain.isPartialResult ? "..." : "=")
+        }
     }
     
 }
