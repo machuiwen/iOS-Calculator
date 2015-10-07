@@ -36,6 +36,13 @@ class CalculatorBrain {
         }
     }
     
+    var error: Bool {
+        // error is true if accumulator is +Inf, -Inf or NaN
+        get {
+            return accumulator.isInfinite || accumulator.isNaN
+        }
+    }
+    
     func setOperand(operand: Double) {
         internalProgram.append(operand)
         accumulator = operand
@@ -62,9 +69,9 @@ class CalculatorBrain {
         "√": Operation.UnaryOperation(sqrt),
         "sin": Operation.UnaryOperation(sin),
         "cos": Operation.UnaryOperation(cos),
-        "ln": Operation.UnaryOperation({ ($0 > 0) ? log($0) : Double.NaN }),
+        "ln": Operation.UnaryOperation(log),
         "x²": Operation.UnaryOperation({ pow($0, 2) }),
-        "x⁻¹": Operation.UnaryOperation({ ($0 == 0) ? Double.NaN : 1 / $0 }),
+        "x⁻¹": Operation.UnaryOperation({ 1 / $0 }),
         "eˣ": Operation.UnaryOperation({ pow(M_E, $0) }),
         "±": Operation.UnaryOperation({ -$0 }),
         "×": Operation.BinaryOperation(*),

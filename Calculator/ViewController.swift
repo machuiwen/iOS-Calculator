@@ -25,8 +25,17 @@ class ViewController: UIViewController {
     
     private var userIsInTheMiddleOfTypingANumber = false
     
+    private func updateDisplay() {
+        if !brain.error {
+            displayValue = brain.result
+        } else {
+            display.text = "Error"
+        }
+        userIsInTheMiddleOfTypingANumber = false
+    }
+    
     private func updateDisplayAndDescription() {
-        displayValue = brain.result
+        updateDisplay()
         if brain.description.isEmpty {
             inputSequence.text = " "
         } else {
@@ -39,7 +48,7 @@ class ViewController: UIViewController {
             display.text!.removeAtIndex(display.text!.endIndex.predecessor())
             if display.text!.isEmpty {
                 userIsInTheMiddleOfTypingANumber = false
-                displayValue = 0
+                displayValue = nil
             }
         } else {
             brain.performOperation(sender.currentTitle!)
@@ -94,13 +103,11 @@ class ViewController: UIViewController {
     
     @IBAction private func setVariable() {
         brain.variableValues["M"] = displayValue
-        userIsInTheMiddleOfTypingANumber = false
-        displayValue = brain.result
+        updateDisplay()
     }
     
     @IBAction private func getVariable() {
         brain.setOperand("M")
-        userIsInTheMiddleOfTypingANumber = false
         updateDisplayAndDescription()
     }
     
