@@ -25,22 +25,16 @@ class CalculatorBrain {
     private var implicitCurrentOperand = "0"
     
     var description: String {
-        get {
-            return sequence + currentOperand
-        }
+        return sequence + currentOperand
     }
     
     var isPartialResult: Bool {
-        get {
-            return pending != nil
-        }
+        return pending != nil
     }
     
     var error: Bool {
         // error is true if accumulator is +Inf, -Inf or NaN
-        get {
-            return accumulator.isInfinite || accumulator.isNaN
-        }
+        return accumulator.isInfinite || accumulator.isNaN
     }
     
     func setOperand(operand: Double) {
@@ -204,8 +198,6 @@ class CalculatorBrain {
     private var pending: PendingBinaryOperationInfo?
     
     var result: Double {
-        get {
-            return accumulator
-        }
+        return accumulator
     }
 }
