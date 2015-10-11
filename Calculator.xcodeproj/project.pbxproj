@@ -13,6 +13,7 @@
 		5D6244A01BB4DC1900A945E0 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5D62449F1BB4DC1900A945E0 /* Assets.xcassets */; };
 		5D6244A31BB4DC1900A945E0 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5D6244A11BB4DC1900A945E0 /* LaunchScreen.storyboard */; };
 		5D6244AC1BB4DC7900A945E0 /* CalculatorBrain.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D6244AB1BB4DC7900A945E0 /* CalculatorBrain.swift */; settings = {ASSET_TAGS = (); }; };
+		5DA2F5271BCB12F100379D3A /* AxesDrawer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DA2F5261BCB12F100379D3A /* AxesDrawer.swift */; settings = {ASSET_TAGS = (); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -24,6 +25,7 @@
 		5D6244A21BB4DC1900A945E0 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		5D6244A41BB4DC1900A945E0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		5D6244AB1BB4DC7900A945E0 /* CalculatorBrain.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CalculatorBrain.swift; sourceTree = "<group>"; };
+		5DA2F5261BCB12F100379D3A /* AxesDrawer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AxesDrawer.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -60,6 +62,7 @@
 				5D62449A1BB4DC1900A945E0 /* ViewController.swift */,
 				5D62449C1BB4DC1900A945E0 /* Main.storyboard */,
 				5D6244AB1BB4DC7900A945E0 /* CalculatorBrain.swift */,
+				5DA2F5261BCB12F100379D3A /* AxesDrawer.swift */,
 			);
 			path = Calculator;
 			sourceTree = "<group>";
@@ -147,6 +150,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				5D6244AC1BB4DC7900A945E0 /* CalculatorBrain.swift in Sources */,
+				5DA2F5271BCB12F100379D3A /* AxesDrawer.swift in Sources */,
 				5D62449B1BB4DC1900A945E0 /* ViewController.swift in Sources */,
 				5D6244991BB4DC1900A945E0 /* AppDelegate.swift in Sources */,
 			);
