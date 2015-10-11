@@ -111,4 +111,9 @@ class ViewController: UIViewController {
         updateDisplayAndDescription()
     }
     
+    @IBAction private func removeVariable() {
+        brain.variableValues.removeValueForKey("M")
+        updateDisplay()
+    }
+    
 }

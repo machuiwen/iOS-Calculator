@@ -61,10 +61,12 @@ class CalculatorBrain {
         "e": Operation.Constant(M_E),
         "🎲": Operation.Variable({ Double(arc4random()) / Double(UINT32_MAX) }),
         "√": Operation.UnaryOperation(sqrt),
+        "%": Operation.UnaryOperation({ $0 / 100 }),
         "sin": Operation.UnaryOperation(sin),
         "cos": Operation.UnaryOperation(cos),
         "ln": Operation.UnaryOperation(log),
         "x²": Operation.UnaryOperation({ pow($0, 2) }),
+        "x³": Operation.UnaryOperation({ pow($0, 3) }),
         "x⁻¹": Operation.UnaryOperation({ 1 / $0 }),
         "eˣ": Operation.UnaryOperation({ pow(M_E, $0) }),
         "±": Operation.UnaryOperation({ -$0 }),
@@ -74,7 +76,7 @@ class CalculatorBrain {
         "−": Operation.BinaryOperation(-),
         "=": Operation.Equals,
         "←": Operation.Undo,
-        "C": Operation.Clear
+        "AC": Operation.Clear
     ]
     
     private enum Operation {
@@ -147,10 +149,14 @@ class CalculatorBrain {
                 switch symbol {
                 case "x²":
                     currentOperand = "(" + currentOperand + ")²"
+                case "x³":
+                    currentOperand = "(" + currentOperand + ")³"
                 case "x⁻¹":
                     currentOperand = "(" + currentOperand + ")⁻¹"
                 case "eˣ":
                     currentOperand = "e^" + "(" + currentOperand + ")"
+                case "%":
+                    currentOperand = "(" + currentOperand + ")%"
                 default:
                     currentOperand = symbol + "(" + currentOperand + ")"
                 }
