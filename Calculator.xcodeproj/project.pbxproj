@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5D0AD8BC1BCB299400910AB1 /* GraphViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D0AD8BB1BCB299400910AB1 /* GraphViewController.swift */; settings = {ASSET_TAGS = (); }; };
 		5D6244991BB4DC1900A945E0 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D6244981BB4DC1900A945E0 /* AppDelegate.swift */; };
 		5D62449B1BB4DC1900A945E0 /* CalculatorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D62449A1BB4DC1900A945E0 /* CalculatorViewController.swift */; };
 		5D62449E1BB4DC1900A945E0 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5D62449C1BB4DC1900A945E0 /* Main.storyboard */; };
@@ -17,6 +18,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		5D0AD8BB1BCB299400910AB1 /* GraphViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GraphViewController.swift; sourceTree = "<group>"; };
 		5D6244951BB4DC1900A945E0 /* Calculator.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Calculator.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5D6244981BB4DC1900A945E0 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		5D62449A1BB4DC1900A945E0 /* CalculatorViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalculatorViewController.swift; sourceTree = "<group>"; };
@@ -60,6 +62,7 @@
 			children = (
 				5D6244AA1BB4DC3700A945E0 /* Supporting Files */,
 				5D62449A1BB4DC1900A945E0 /* CalculatorViewController.swift */,
+				5D0AD8BB1BCB299400910AB1 /* GraphViewController.swift */,
 				5D62449C1BB4DC1900A945E0 /* Main.storyboard */,
 				5D6244AB1BB4DC7900A945E0 /* CalculatorBrain.swift */,
 				5DA2F5261BCB12F100379D3A /* AxesDrawer.swift */,
@@ -150,6 +153,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				5D6244AC1BB4DC7900A945E0 /* CalculatorBrain.swift in Sources */,
+				5D0AD8BC1BCB299400910AB1 /* GraphViewController.swift in Sources */,
 				5DA2F5271BCB12F100379D3A /* AxesDrawer.swift in Sources */,
 				5D62449B1BB4DC1900A945E0 /* CalculatorViewController.swift in Sources */,
 				5D6244991BB4DC1900A945E0 /* AppDelegate.swift in Sources */,

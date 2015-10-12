@@ -33,14 +33,14 @@ class AxesDrawer
         self.init()
         self.contentScaleFactor = contentScaleFactor
     }
-
+    
     // this method is the heart of the AxesDrawer
     // it draws in the current graphic context's coordinate system
     // therefore origin and bounds must be in the current graphics context's coordinate system
     // pointsPerUnit is essentially the "scale" of the axes
     // e.g. if you wanted there to be 100 points along an axis between -1 and 1,
     //    you'd set pointsPerUnit to 50
-
+    
     func drawAxesInRect(bounds: CGRect, origin: CGPoint, pointsPerUnit: CGFloat)
     {
         CGContextSaveGState(UIGraphicsGetCurrentContext())
@@ -54,9 +54,9 @@ class AxesDrawer
         drawHashmarksInRect(bounds, origin: origin, pointsPerUnit: abs(pointsPerUnit))
         CGContextRestoreGState(UIGraphicsGetCurrentContext())
     }
-
+    
     // the rest of this class is private
-
+    
     private func drawHashmarksInRect(bounds: CGRect, origin: CGPoint, pointsPerUnit: CGFloat)
     {
         if ((origin.x >= bounds.minX) && (origin.x <= bounds.maxX)) || ((origin.y >= bounds.minY) && (origin.y <= bounds.maxY))
@@ -69,7 +69,7 @@ class AxesDrawer
             } else {
                 unitsPerHashmark = floor(unitsPerHashmark)
             }
-
+            
             let pointsPerHashmark = pointsPerUnit * unitsPerHashmark
             
             // figure out which is the closest set of hashmarks (radiating out from the origin) that are in bounds
@@ -85,12 +85,12 @@ class AxesDrawer
             // now create a bounding box inside whose edges those four hashmarks lie
             let bboxSize = pointsPerHashmark * startingHashmarkRadius * 2
             var bbox = CGRect(center: origin, size: CGSize(width: bboxSize, height: bboxSize))
-
+            
             // formatter for the hashmark labels
             let formatter = NSNumberFormatter()
             formatter.maximumFractionDigits = Int(-log10(Double(unitsPerHashmark)))
             formatter.minimumIntegerDigits = 1
-
+            
             // radiate the bbox out until the hashmarks are further out than the bounds
             while !CGRectContainsRect(bbox, bounds)
             {
@@ -116,10 +116,10 @@ class AxesDrawer
     {
         var dx: CGFloat = 0, dy: CGFloat = 0
         switch text {
-            case .Left: dx = Constants.HashmarkSize / 2
-            case .Right: dx = Constants.HashmarkSize / 2
-            case .Top: dy = Constants.HashmarkSize / 2
-            case .Bottom: dy = Constants.HashmarkSize / 2
+        case .Left: dx = Constants.HashmarkSize / 2
+        case .Right: dx = Constants.HashmarkSize / 2
+        case .Top: dy = Constants.HashmarkSize / 2
+        case .Bottom: dy = Constants.HashmarkSize / 2
         }
         
         let path = UIBezierPath()
@@ -147,29 +147,29 @@ class AxesDrawer
             ]
             var textRect = CGRect(center: location, size: text.sizeWithAttributes(attributes))
             switch self {
-                case Top: textRect.origin.y += textRect.size.height / 2 + AnchoredText.VerticalOffset
-                case Left: textRect.origin.x += textRect.size.width / 2 + AnchoredText.HorizontalOffset
-                case Bottom: textRect.origin.y -= textRect.size.height / 2 + AnchoredText.VerticalOffset
-                case Right: textRect.origin.x -= textRect.size.width / 2 + AnchoredText.HorizontalOffset
+            case Top: textRect.origin.y += textRect.size.height / 2 + AnchoredText.VerticalOffset
+            case Left: textRect.origin.x += textRect.size.width / 2 + AnchoredText.HorizontalOffset
+            case Bottom: textRect.origin.y -= textRect.size.height / 2 + AnchoredText.VerticalOffset
+            case Right: textRect.origin.x -= textRect.size.width / 2 + AnchoredText.HorizontalOffset
             }
             text.drawInRect(textRect, withAttributes: attributes)
         }
-
+        
         var text: String {
             switch self {
-                case Left(let text): return text
-                case Right(let text): return text
-                case Top(let text): return text
-                case Bottom(let text): return text
+            case Left(let text): return text
+            case Right(let text): return text
+            case Top(let text): return text
+            case Bottom(let text): return text
             }
         }
     }
-
+    
     // we want the axes and hashmarks to be exactly on pixel boundaries so they look sharp
     // setting contentScaleFactor properly will enable us to put things on the closest pixel boundary
     // if contentScaleFactor is left to its default (1), then things will be on the nearest "point" boundary instead
     // the lines will still be sharp in that case, but might be a pixel (or more theoretically) off of where they should be
-
+    
     private func alignedPoint(x x: CGFloat, y: CGFloat, insideBounds: CGRect? = nil) -> CGPoint?
     {
         let point = CGPoint(x: align(x), y: align(y))
@@ -178,7 +178,7 @@ class AxesDrawer
         }
         return point
     }
-
+    
     private func align(coordinate: CGFloat) -> CGFloat {
         return round(coordinate * contentScaleFactor) / contentScaleFactor
     }
