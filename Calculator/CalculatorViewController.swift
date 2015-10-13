@@ -122,14 +122,15 @@ class CalculatorViewController: UIViewController {
         }
     }
     
-    //TODO: prepareForSegue
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         var destinationvc: UIViewController? = segue.destinationViewController
         if let navcon = destinationvc as? UINavigationController {
             destinationvc = navcon.visibleViewController
         }
         if let graphvc = destinationvc as? GraphViewController {
-            graphvc.navigationItem.title = brain.description //TODO: use input seq
+            // set the title
+            graphvc.navigationItem.title = brain.description
+            // send current program
             graphvc.program = brain.program
         }
     }

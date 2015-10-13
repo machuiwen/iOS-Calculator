@@ -64,6 +64,7 @@ class CalculatorBrain {
         "%": Operation.UnaryOperation({ $0 / 100 }),
         "sin": Operation.UnaryOperation(sin),
         "cos": Operation.UnaryOperation(cos),
+        "tan": Operation.UnaryOperation(tan),
         "ln": Operation.UnaryOperation(log),
         "x²": Operation.UnaryOperation({ pow($0, 2) }),
         "x³": Operation.UnaryOperation({ pow($0, 3) }),

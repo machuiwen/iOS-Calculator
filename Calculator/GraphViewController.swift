@@ -10,12 +10,15 @@ import UIKit
 
 class GraphViewController: UIViewController {
     
-    @IBOutlet weak var graphView: GraphView! {
+    @IBOutlet private weak var graphView: GraphView! {
         didSet {
+            // add pinch gesture recognizer
             graphView.addGestureRecognizer(UIPinchGestureRecognizer(target: graphView, action: "changeScale:"))
+            // add pan gesture recognizer
             let panRecognizer = UIPanGestureRecognizer(target: graphView, action: "shiftGraph:")
             panRecognizer.maximumNumberOfTouches = 1
             graphView.addGestureRecognizer(panRecognizer)
+            // add tap gesture recognizer
             let tapRecognizer = UITapGestureRecognizer(target: graphView, action: "reCenter:")
             tapRecognizer.numberOfTapsRequired = 2
             graphView.addGestureRecognizer(tapRecognizer)
@@ -23,24 +26,22 @@ class GraphViewController: UIViewController {
         }
     }
     
-    var brain = CalculatorBrain()
+    // A calculator brain to run program
+    private var brain = CalculatorBrain()
     
-    func myFunc(x: Double) -> Double {
+    // Function to be passed to graphView
+    // assume program is not nil
+    private func f(x: Double) -> Double {
         brain.variableValues["M"] = x
-        if program != nil {
-            brain.program = program!
-        }
+        brain.program = program!
         return brain.result
     }
     
-    var program: AnyObject? {
-        didSet {
-            updateUI()
-        }
-    }
+    // Current program
+    var program: AnyObject? { didSet { updateUI() } }
     
-    func updateUI() {
-        graphView?.graphFunction = myFunc
+    private func updateUI() {
+        graphView?.graphFunction = (program != nil) ? f : nil
     }
     
 }

@@ -109,7 +109,7 @@
                                                         <rect key="frame" x="0.0" y="0.0" width="111" height="60"/>
                                                         <color key="backgroundColor" red="0.99607843137254903" green="0.78823529411764703" blue="0.086274509803921567" alpha="1" colorSpace="calibratedRGB"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="30"/>
-                                                        <state key="normal" title="e">
+                                                        <state key="normal" title="tan">
                                                             <color key="titleColor" white="0.39519942429999999" alpha="1" colorSpace="calibratedWhite"/>
                                                         </state>
                                                         <connections>
@@ -486,7 +486,7 @@
             </objects>
             <point key="canvasLocation" x="659" y="163"/>
         </scene>
-        <!--Graph View Controller-->
+        <!--Graph-->
         <scene sceneID="qBw-sU-H9g">
             <objects>
                 <viewController id="S0L-0x-zuV" customClass="GraphViewController" customModule="Calculator" customModuleProvider="target" sceneMemberID="viewController">
@@ -516,14 +516,14 @@
                             <constraint firstItem="5Dg-Nz-FA2" firstAttribute="bottom" secondItem="y4i-h1-VuC" secondAttribute="top" id="xpg-mc-WdM"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" id="lyk-KC-MgE"/>
+                    <navigationItem key="navigationItem" title="Graph" id="lyk-KC-MgE"/>
                     <connections>
                         <outlet property="graphView" destination="5Dg-Nz-FA2" id="Wic-Uv-yCB"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Yf0-wf-Hpx" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1411" y="838"/>
+            <point key="canvasLocation" x="1474" y="838"/>
         </scene>
         <!--Split View Controller-->
         <scene sceneID="oEy-FQ-t7S">
