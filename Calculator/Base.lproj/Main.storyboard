@@ -478,6 +478,7 @@
                     <navigationItem key="navigationItem" title="Calculator" id="Ii8-0x-FhK"/>
                     <connections>
                         <outlet property="display" destination="uOr-45-ctq" id="eyh-cn-jPa"/>
+                        <outlet property="graphButton" destination="Taz-nK-Lwy" id="Gzm-kD-9iX"/>
                         <outlet property="inputSequence" destination="PUY-hH-3Be" id="5iB-y1-epQ"/>
                         <segue destination="3Io-rh-vmQ" kind="showDetail" identifier="Show Graph" id="CrR-hK-iPD"/>
                     </connections>

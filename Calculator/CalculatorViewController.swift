@@ -20,8 +20,8 @@ class CalculatorViewController: UIViewController {
     }
     
     @IBOutlet private weak var display: UILabel!
-    
     @IBOutlet private weak var inputSequence: UILabel!
+    @IBOutlet private weak var graphButton: UIButton!
     
     private var userIsInTheMiddleOfTypingANumber = false
     
@@ -38,8 +38,10 @@ class CalculatorViewController: UIViewController {
         updateDisplay()
         if brain.description.isEmpty {
             inputSequence.text = " "
+            graphButton.setTitle("📈", forState: .Normal)
         } else {
             inputSequence.text = brain.description + (brain.isPartialResult ? "..." : "=")
+            graphButton.setTitle((brain.isPartialResult ? "🚫" : "📈"), forState: .Normal)
         }
     }
     
