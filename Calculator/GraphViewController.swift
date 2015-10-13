@@ -9,27 +9,38 @@
 import UIKit
 
 class GraphViewController: UIViewController {
-
-    override func viewDidLoad() {
-        super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
-    }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+    
+    @IBOutlet weak var graphView: GraphView! {
+        didSet {
+            graphView.addGestureRecognizer(UIPinchGestureRecognizer(target: graphView, action: "changeScale:"))
+            let panRecognizer = UIPanGestureRecognizer(target: graphView, action: "shiftGraph:")
+            panRecognizer.maximumNumberOfTouches = 1
+            graphView.addGestureRecognizer(panRecognizer)
+            let tapRecognizer = UITapGestureRecognizer(target: graphView, action: "reCenter:")
+            tapRecognizer.numberOfTapsRequired = 2
+            graphView.addGestureRecognizer(tapRecognizer)
+            updateUI()
+        }
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+    var brain = CalculatorBrain()
+    
+    func myFunc(x: Double) -> Double {
+        brain.variableValues["M"] = x
+        if program != nil {
+            brain.program = program!
+        }
+        return brain.result
     }
-    */
-
+    
+    var program: AnyObject? {
+        didSet {
+            updateUI()
+        }
+    }
+    
+    func updateUI() {
+        graphView?.graphFunction = myFunc
+    }
+    
 }

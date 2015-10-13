@@ -130,6 +130,7 @@ class CalculatorViewController: UIViewController {
         }
         if let graphvc = destinationvc as? GraphViewController {
             graphvc.navigationItem.title = brain.description //TODO: use input seq
+            graphvc.program = brain.program
         }
     }
     
