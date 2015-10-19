@@ -18,8 +18,11 @@ class GraphViewController: UIViewController {
         graphView.scale = (defaults.objectForKey("Scale") as? CGFloat) ?? 1.0
         graphView.originOffset.dx = (defaults.objectForKey("OriginOffsetX") as? CGFloat) ?? 0.0
         graphView.originOffset.dy = (defaults.objectForKey("OriginOffsetY") as? CGFloat) ?? 0.0
-        // if we have set the LastProgram, unwrap it. if not, do nothing
-        if let oldProgram = defaults.objectForKey("LastProgram") { self.program = oldProgram }
+        // For the first launch (program == nil)
+        if program == nil {
+            // if we have set the LastProgram, unwrap it. if not, do nothing
+            if let oldProgram = defaults.objectForKey("LastProgram") { self.program = oldProgram }
+        }
     }
     
     override func viewWillDisappear(animated: Bool) {
