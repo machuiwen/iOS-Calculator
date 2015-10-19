@@ -10,6 +10,25 @@ import UIKit
 
 class GraphViewController: UIViewController {
     
+    // Preserve origin and scale between launchings of the application
+    // Preserve the last graph it was showing
+    private let defaults = NSUserDefaults.standardUserDefaults()
+    
+    override func viewWillAppear(animated: Bool) {
+        graphView.scale = (defaults.objectForKey("Scale") as? CGFloat) ?? 1.0
+        graphView.originOffset.dx = (defaults.objectForKey("OriginOffsetX") as? CGFloat) ?? 0.0
+        graphView.originOffset.dy = (defaults.objectForKey("OriginOffsetY") as? CGFloat) ?? 0.0
+        // if we have set the LastProgram, unwrap it. if not, do nothing
+        if let oldProgram = defaults.objectForKey("LastProgram") { self.program = oldProgram }
+    }
+    
+    override func viewWillDisappear(animated: Bool) {
+        defaults.setObject(graphView.scale, forKey: "Scale")
+        defaults.setObject(graphView.originOffset.dx, forKey: "OriginOffsetX")
+        defaults.setObject(graphView.originOffset.dy, forKey: "OriginOffsetY")
+        defaults.setObject(self.program, forKey: "LastProgram")
+    }
+    
     @IBOutlet private weak var graphView: GraphView! {
         didSet {
             // add pinch gesture recognizer
